@@ -1,0 +1,49 @@
+<div class="admin-login-root">
+  <div class="grid-overlay"></div>
+
+  <div class="admin-card">
+    <div class="card-corner tl"></div>
+    <div class="card-corner tr"></div>
+    <div class="card-corner bl"></div>
+    <div class="card-corner br"></div>
+
+    <div class="admin-badge">
+      <mat-icon>shield</mat-icon>
+      <span>ACCESO RESTRINGIDO</span>
+    </div>
+
+    <div class="brand-row">
+      <span class="brand-name">Avisum</span>
+      <span class="brand-tag">Panel de Administración</span>
+    </div>
+
+    <h2 class="admin-title">Centro de Control</h2>
+    <p class="admin-sub">Ingrese su código de administrador para acceder al panel operativo.</p>
+
+    <div class="field-wrap">
+      <mat-form-field appearance="outline" class="full-w">
+        <mat-icon matPrefix>admin_panel_settings</mat-icon>
+        <input matInput placeholder="Código de Administrador"
+               [value]="codigoAdmin()"
+               (input)="codigoAdmin.set($any($event.target).value); error.set(false)"
+               (keyup.enter)="verify()" />
+      </mat-form-field>
+    </div>
+
+    <button class="admin-btn-primary" (click)="verify()">
+      <mat-icon>lock_open</mat-icon> INICIAR SESIÓN (ADMIN)
+    </button>
+
+    @if (error()) {
+      <div class="admin-error">
+        <mat-icon>error</mat-icon>
+        <span>Código de administrador inválido.</span>
+      </div>
+    }
+
+    <div class="admin-footer">
+      <mat-icon>support_agent</mat-icon>
+      <span>¿Olvidó su código? Contacte Soporte</span>
+    </div>
+  </div>
+</div>
