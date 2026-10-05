@@ -1,0 +1,194 @@
+.profile-root {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+  padding: 24px;
+  height: calc(100vh - 48px);
+  overflow-y: auto;
+}
+
+.profile-root--empty { grid-template-columns: 1fr; }
+
+.section-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--sb-gray);
+  text-transform: uppercase;
+}
+
+/* ---- ID CARD ---- */
+.id-card {
+  background: var(--sb-accent);
+  color: #000;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: fit-content;
+}
+.id-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+}
+.id-brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+}
+.id-role {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+}
+.id-photo {
+  background: #000;
+  color: var(--sb-accent);
+  height: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.id-initials {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 52px;
+}
+.id-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  word-break: break-word;
+}
+.id-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  border-top: 1px dashed rgba(0,0,0,0.4);
+  padding-top: 12px;
+}
+.id-field { display: flex; flex-direction: column; gap: 2px; }
+.id-field .sb-label { color: rgba(0,0,0,0.6); }
+.id-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+}
+.id-unit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0,0,0,0.12);
+  padding: 8px 10px;
+}
+.id-unit .sb-label { color: rgba(0,0,0,0.6); }
+.id-unit-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 17px;
+}
+.id-barcode {
+  height: 32px;
+  background: repeating-linear-gradient(90deg, #000 0 2px, transparent 2px 5px);
+  margin-top: 4px;
+}
+.id-qr-code {
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+/* ---- TURNO DE HOY ---- */
+.shift-card { height: fit-content; }
+.shift-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.shift-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--sb-accent);
+}
+.shift-status.inactive { color: var(--sb-gray); }
+.shift-status.inactive .dot-g-sm { background: var(--sb-gray); animation: none; }
+
+.dot-g-sm {
+  width: 7px; height: 7px;
+  background: var(--sb-accent);
+  border-radius: 50%;
+  animation: profilePulse 2s infinite;
+  flex-shrink: 0;
+}
+@keyframes profilePulse { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
+
+.shift-time {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 46px;
+  color: var(--sb-accent);
+  line-height: 1;
+}
+.shift-time-label {
+  font-size: 12px;
+  color: var(--sb-gray);
+  margin-bottom: 20px;
+}
+
+.shift-rows { display: flex; flex-direction: column; }
+.shift-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--sb-border2);
+  font-size: 14px;
+  color: var(--sb-gray);
+}
+.shift-row:last-child { border-bottom: none; }
+.shift-row-value {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--sb-white);
+}
+.shift-row-value.accent { color: var(--sb-accent); }
+
+.profile-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  gap: 16px;
+}
+.back-link {
+  font-size: 13px;
+  color: var(--sb-white);
+  text-decoration: underline;
+  white-space: nowrap;
+}
+.logout-btn {
+  width: auto;
+  padding: 10px 20px;
+  border-color: var(--sb-red);
+  color: var(--sb-red);
+}
+.logout-btn:hover { background: var(--sb-red); color: #000; }
+.logout-btn mat-icon { font-size: 16px; width: 16px; height: 16px; }
+
+.empty-login-btn { width: auto; display: inline-flex; margin-top: 16px; }
+
+@media (max-width: 900px) {
+  .profile-root { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,149 @@
+<div class="dm-root">
+  <div class="dm-header">
+    <div>
+      <h2 class="dm-title">GESTIÓN DE CONDUCTORES</h2>
+      <p class="dm-sub">{{ activosCount() }} activos de {{ filtered().length }} registrados</p>
+    </div>
+    <div class="dm-actions">
+      <div class="dm-search">
+        <mat-icon>search</mat-icon>
+        <input placeholder="Buscar por nombre, DNI o código..."
+               [value]="searchTerm()"
+               (input)="searchTerm.set($any($event.target).value)" />
+      </div>
+      <button class="sb-btn-primary new-driver-btn" (click)="abrirCrear()">
+        <mat-icon>add</mat-icon> NUEVO CONDUCTOR
+      </button>
+    </div>
+  </div>
+
+  <div class="driver-table">
+    <div class="table-header">
+      <span>CONDUCTOR</span>
+      <span>DNI</span>
+      <span>CÓD. EMPLEADO</span>
+      <span>CORREO</span>
+      <span>ESTADO</span>
+      <span>ACCIONES</span>
+    </div>
+    @for (c of filtered(); track c.id) {
+      <div class="table-row">
+        <div class="driver-cell">
+          <div class="driver-avatar">{{ c.iniciales }}</div>
+          <p class="driver-name">{{ c.nombre }} {{ c.apellido }}</p>
+        </div>
+        <span class="cell-mono">{{ c.dni }}</span>
+        <span class="cell-mono">{{ c.codigoEmpleado }}</span>
+        <span class="cell-mono">{{ c.email }}</span>
+        <span class="cell-estado" [style.color]="estadoColor(c.estado)">{{ c.estado }}</span>
+        <div class="cell-actions">
+          <button class="action-btn" title="Editar" (click)="abrirEditar(c)">
+            <mat-icon>edit</mat-icon>
+          </button>
+          @if (c.estado === 'ACTIVO') {
+            <button class="action-btn red" title="Desactivar" (click)="pedirConfirmacion(c, 'desactivar')">
+              <mat-icon>block</mat-icon>
+            </button>
+          } @else {
+            <button class="action-btn" title="Reactivar" (click)="pedirConfirmacion(c, 'reactivar')">
+              <mat-icon>restart_alt</mat-icon>
+            </button>
+          }
+          <button class="action-btn red" title="Eliminar" (click)="pedirConfirmacion(c, 'eliminar')">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    } @empty {
+      <div class="table-empty">No se encontraron conductores.</div>
+    }
+  </div>
+</div>
+
+@if (showFormModal()) {
+  <div class="sb-overlay">
+    <div class="sb-modal form-modal">
+      <h3 class="modal-title">{{ formMode() === 'crear' ? 'NUEVO CONDUCTOR' : 'EDITAR CONDUCTOR' }}</h3>
+
+      @if (formErrors()['general']) {
+        <p class="form-error-general">{{ formErrors()['general'] }}</p>
+      }
+
+      <div class="form-row">
+        <label>Nombres</label>
+        <input [value]="fNombre()" (input)="fNombre.set($any($event.target).value)" />
+        @if (formErrors()['nombre']) { <span class="field-error">{{ formErrors()['nombre'] }}</span> }
+      </div>
+
+      <div class="form-row">
+        <label>Apellidos</label>
+        <input [value]="fApellido()" (input)="fApellido.set($any($event.target).value)" />
+        @if (formErrors()['apellido']) { <span class="field-error">{{ formErrors()['apellido'] }}</span> }
+      </div>
+
+      <div class="form-row">
+        <label>DNI</label>
+        <input [value]="fDni()" (input)="fDni.set($any($event.target).value)" maxlength="8" />
+        @if (formErrors()['dni']) { <span class="field-error">{{ formErrors()['dni'] }}</span> }
+      </div>
+
+      <div class="form-row">
+        <label>Correo</label>
+        <input [value]="fEmail()" (input)="fEmail.set($any($event.target).value)" />
+        @if (formErrors()['email']) { <span class="field-error">{{ formErrors()['email'] }}</span> }
+      </div>
+
+      @if (formMode() === 'crear') {
+        <div class="form-row">
+          <label>Contraseña temporal</label>
+          <input type="password" [value]="fPassword()" (input)="fPassword.set($any($event.target).value)" />
+          @if (formErrors()['password']) { <span class="field-error">{{ formErrors()['password'] }}</span> }
+        </div>
+        <p class="form-note">El código de empleado se asigna automáticamente al guardar.</p>
+      }
+
+      <div class="modal-btns">
+        <button class="sb-btn-outline" (click)="cerrarForm()">CANCELAR</button>
+        <button class="sb-btn-primary" [disabled]="saving()" (click)="guardar()">
+          {{ saving() ? 'GUARDANDO...' : 'GUARDAR' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (showConfirmModal()) {
+  <div class="sb-overlay">
+    <div class="sb-modal confirm-modal">
+      @if (confirmAction() === 'eliminar') {
+        <h3 class="modal-title">{{ confirmStep() === 1 ? 'ELIMINAR CONDUCTOR' : 'CONFIRMAR ELIMINACIÓN' }}</h3>
+        <p class="modal-sub">
+          @if (confirmStep() === 1) {
+            ¿Seguro que deseas eliminar a {{ confirmTarget()?.nombreCompleto }}? Esta acción no se puede revertir.
+          } @else {
+            Esta es tu última confirmación. {{ confirmTarget()?.nombreCompleto }} será eliminado permanentemente.
+          }
+        </p>
+      } @else {
+        <h3 class="modal-title">{{ confirmAction() === 'desactivar' ? 'DESACTIVAR CONDUCTOR' : 'REACTIVAR CONDUCTOR' }}</h3>
+        <p class="modal-sub">
+          @if (confirmAction() === 'desactivar') {
+            {{ confirmTarget()?.nombreCompleto }} no podrá iniciar sesión hasta que sea reactivado. ¿Continuar?
+          } @else {
+            {{ confirmTarget()?.nombreCompleto }} podrá volver a iniciar sesión. ¿Continuar?
+          }
+        </p>
+      }
+      <div class="modal-btns">
+        <button class="sb-btn-outline" (click)="cancelarConfirmacion()">CANCELAR</button>
+        <button class="sb-btn-primary" (click)="avanzarConfirmacion()">
+          {{ confirmAction() === 'eliminar' && confirmStep() === 1 ? 'CONTINUAR' : 'CONFIRMAR' }}
+        </button>
+      </div>
+    </div>
+  </div>
+}
+
+@if (toastMsg()) {
+  <div class="sb-toast">{{ toastMsg() }}</div>
+}

@@ -1,0 +1,82 @@
+@if (conductor(); as c) {
+  <div class="profile-root">
+    <div class="id-card">
+      <div class="id-card-header">
+        <span class="id-brand">Avisum</span>
+        <span class="id-role">Conductor</span>
+      </div>
+
+      <div class="id-photo">
+        <span class="id-initials">{{ initials() }}</span>
+      </div>
+
+      <p class="id-name">{{ c.nombreCompleto }}</p>
+
+      <div class="id-grid">
+        <div class="id-field">
+          <span class="sb-label">Código</span>
+          <span class="id-value">{{ c.codigoEmpleado }}</span>
+        </div>
+        <div class="id-field">
+          <span class="sb-label">DNI</span>
+          <span class="id-value">{{ c.dni || 'Sin registrar' }}</span>
+        </div>
+      </div>
+
+      <div class="id-unit">
+        <span class="sb-label">Unidad</span>
+        <span class="id-unit-value">{{ placaUnidad() }}</span>
+      </div>
+
+      <div class="id-barcode"></div>
+      <p class="id-qr-code">QR-{{ c.codigoEmpleado }}</p>
+    </div>
+
+    <div class="sb-card shift-card">
+      <div class="shift-header">
+        <p class="section-label">TURNO DE HOY</p>
+        <span class="shift-status" [class.inactive]="!shift.turnoActivo()">
+          <span class="dot-g-sm"></span>
+          {{ shift.turnoActivo() ? 'EN RUTA' : 'SIN TURNO ACTIVO' }}
+        </span>
+      </div>
+
+      <p class="shift-time">{{ shift.tiempoStr() }}</p>
+      <p class="shift-time-label">de servicio</p>
+
+      <div class="shift-rows">
+        <div class="shift-row">
+          <span>Distancia</span>
+          <span class="shift-row-value">{{ shift.distanciaKm() | number:'1.2-2' }} km</span>
+        </div>
+        <div class="shift-row">
+          <span>Pasajeros</span>
+          <span class="shift-row-value">{{ shift.pasajeros() }}</span>
+        </div>
+        <div class="shift-row">
+          <span>Recaudación</span>
+          <span class="shift-row-value">${{ shift.recaudacion() | number:'1.2-2' }}</span>
+        </div>
+        <div class="shift-row">
+          <span>Estado de la cuenta</span>
+          <span class="shift-row-value accent">{{ c.estado }}</span>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <a routerLink="/conductor/dashboard" class="back-link">Volver al dashboard</a>
+        <button class="sb-btn-outline logout-btn" (click)="logout()">
+          <mat-icon>logout</mat-icon> Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="profile-root profile-root--empty">
+    <div class="sb-card">
+      <p class="section-label">MI PERFIL</p>
+      <p class="sb-gray">No hay una sesión activa.</p>
+      <a routerLink="/conductor/login" class="sb-btn-outline empty-login-btn">IR AL LOGIN</a>
+    </div>
+  </div>
+}

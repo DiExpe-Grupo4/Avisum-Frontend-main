@@ -1,0 +1,131 @@
+<div class="dash-root">
+  <div class="dash-main">
+    <!-- HEADER -->
+    <div class="report-header">
+      <div class="report-title-row">
+        <span class="chip-finalizado">FINALIZADO</span>
+        <h2 class="report-title">REPORTE DE TURNO</h2>
+      </div>
+      <span class="report-id sb-mono">ID #{{ turno?.id ?? '—' }}</span>
+    </div>
+
+    <!-- FRANJA DE DATOS -->
+    <div class="sb-card data-strip">
+      <div class="data-item">
+        <span class="sb-label">Conductor</span>
+        <span class="sb-value">{{ nombreConductor() }}</span>
+      </div>
+      <div class="data-item">
+        <span class="sb-label">Unidad</span>
+        <span class="sb-value">{{ placaUnidad() }}</span>
+      </div>
+      <div class="data-item">
+        <span class="sb-label">Ruta</span>
+        <span class="sb-value">{{ turno?.rutaNombre }}</span>
+      </div>
+    </div>
+
+    <!-- 4 INDICADORES -->
+    <div class="sb-card service-card">
+      <p class="section-label">INDICADORES DEL SERVICIO</p>
+      @if (turno) {
+        <div class="metrics-row">
+          <div class="metric">
+            <span class="sb-label">DISTANCIA</span>
+            <span class="sb-value">{{ turno.distanciaKm | number:'1.1-1' }} KM</span>
+            <span class="metric-sub">{{ velocidadPromedio() }} km/h promedio</span>
+          </div>
+          <div class="metric">
+            <span class="sb-label">TIEMPO TOTAL</span>
+            <span class="sb-value mono">{{ formatTime(turno.tiempoSegundos) }}</span>
+          </div>
+          <div class="metric">
+            <span class="sb-label">PASAJEROS</span>
+            <span class="sb-value">{{ turno.pasajeros }}</span>
+          </div>
+          <div class="metric">
+            <span class="sb-label">RECAUDACIÓN</span>
+            <span class="sb-value">${{ turno.recaudacion | number:'1.2-2' }}</span>
+            <span class="metric-sub">${{ montoPorPasajero() }} / pasajero</span>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- RUTA + TIMELINE -->
+    <div class="sb-card route-card">
+      <p class="section-label">RUTA Y HORARIO</p>
+      <div class="route-row">
+        <span class="route-badge">R-42</span>
+        <div class="route-info">
+          <p class="route-name">{{ turno?.rutaOrigen }} → {{ turno?.rutaDestino }}</p>
+          <p class="route-sub">{{ turno?.rutaNombre }}</p>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-point">
+          <span class="dot-g-sm"></span>
+          <div>
+            <span class="sb-label">INICIO</span>
+            <span class="sb-value">{{ turno?.fechaInicio | date:'HH:mm:ss' }}</span>
+          </div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-point">
+          <span class="dot-g-sm dot-g-sm--end"></span>
+          <div>
+            <span class="sb-label">FIN</span>
+            <span class="sb-value">{{ turno?.fechaFin ? (turno.fechaFin | date:'HH:mm:ss') : '—' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROTOCOLO DE CIERRE -->
+    <div class="sb-card protocol-card">
+      <div class="protocol-header">
+        <p class="section-label">PROTOCOLO DE CIERRE</p>
+        <span class="protocol-pct">{{ state.protocoloProgreso() }}%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="state.protocoloProgreso()"></div>
+      </div>
+      <div class="check-list">
+        <label class="check-row check-row--readonly">
+          <input type="checkbox" [checked]="state.protocolo1()" disabled />
+          <span>Vehículo estacionado en zona segura / terminal</span>
+        </label>
+        <label class="check-row check-row--readonly">
+          <input type="checkbox" [checked]="state.protocolo2()" disabled />
+          <span>Verificación de interior sin objetos perdidos</span>
+        </label>
+        <label class="check-row check-row--readonly">
+          <input type="checkbox" [checked]="state.protocolo3()" disabled />
+          <span>Validación de total de pasajeros en consola</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash-right">
+    <div class="sb-card finish-card">
+      <div class="power-icon finish-icon--done"><mat-icon>check_circle</mat-icon></div>
+      <p class="finish-label">SERVICIO FINALIZADO</p>
+      <button class="sb-btn-primary new-service-btn" (click)="newService()">INICIAR NUEVO SERVICIO</button>
+    </div>
+    <div class="sb-card status-card">
+      <p class="section-label">ESTADO DEL SISTEMA</p>
+      <div class="status-rows">
+        <div class="status-row"><span class="st-key">GPS</span><span class="st-val">ESTABLE</span></div>
+        <div class="status-row"><span class="st-key">TELEMETRÍA</span><span class="st-val">SINCRO</span></div>
+        <div class="status-row"><span class="st-key">RED CLOUD</span><span class="st-val">ACTIVA</span></div>
+      </div>
+    </div>
+    <div class="map-preview">
+      <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-77.0700,-12.1200,-76.9400,-12.0200&layer=mapnik&marker=-12.0464,-77.0428"
+              width="100%" height="100%" style="border:none; filter:brightness(0.7) saturate(0.6);" title="Mapa Lima">
+      </iframe>
+      <div class="map-overlay-bar"><span class="dot-g-sm"></span> VIGILANCIA ACTIVA: TRANSMITIENDO A CENTRAL</div>
+    </div>
+  </div>
+</div>

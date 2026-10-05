@@ -1,0 +1,115 @@
+.dash-root {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  padding: 20px;
+}
+.dash-main { display: flex; flex-direction: column; gap: 16px; }
+.dash-right { display: flex; flex-direction: column; gap: 16px; }
+
+/* ---- HEADER ---- */
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.report-title-row { display: flex; align-items: center; gap: 12px; }
+.chip-finalizado {
+  background: var(--sb-accent);
+  color: #000;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 800;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+}
+.report-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: var(--sb-white);
+}
+.report-id { font-size: 12px; color: var(--sb-gray); }
+
+/* ---- FRANJA DE DATOS ---- */
+.data-strip {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.data-item { display: flex; flex-direction: column; gap: 4px; }
+
+/* ---- INDICADORES (reusa section-label/sb-label/sb-value globales) ---- */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.metric { display: flex; flex-direction: column; gap: 4px; }
+.metric-sub { font-size: 11px; color: var(--sb-gray); }
+.mono { font-family: 'Share Tech Mono', monospace; }
+
+/* ---- RUTA + TIMELINE ---- */
+.route-row { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.route-badge {
+  background: var(--sb-accent);
+  color: #000;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  font-size: 14px;
+  padding: 6px 10px;
+}
+.route-info { display: flex; flex-direction: column; gap: 2px; }
+.route-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; color: var(--sb-white); }
+.route-sub { font-size: 12px; color: var(--sb-gray); }
+
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px dashed var(--sb-border2);
+  padding-top: 16px;
+}
+.timeline-point { display: flex; align-items: center; gap: 10px; }
+.timeline-point > div { display: flex; flex-direction: column; gap: 2px; }
+.timeline-line { flex: 1; height: 1px; background: var(--sb-border2); min-width: 40px; }
+.dot-g-sm--end { background: var(--sb-gray); }
+
+/* ---- PROTOCOLO DE CIERRE ---- */
+.protocol-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.protocol-pct { font-family: 'Share Tech Mono', monospace; font-size: 13px; color: var(--sb-accent); }
+.progress-bar { height: 4px; background: var(--sb-border2); margin-bottom: 16px; }
+.progress-fill { height: 100%; background: var(--sb-accent); transition: width 0.3s ease; }
+.check-row--readonly { opacity: 0.75; }
+
+/* ---- PANEL DERECHO ---- */
+.finish-card { text-align: center; padding: 24px; }
+.power-icon { display: flex; justify-content: center; margin-bottom: 10px; }
+.finish-icon--done mat-icon { color: var(--sb-accent); font-size: 40px; width: 40px; height: 40px; }
+.finish-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.1em; color: var(--sb-white); margin-bottom: 16px; }
+.new-service-btn { width: 100%; }
+
+.status-rows { display: flex; flex-direction: column; gap: 10px; }
+.status-row { display: flex; justify-content: space-between; font-size: 12px; }
+.st-key { color: var(--sb-gray); }
+.st-val { color: var(--sb-accent); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; }
+
+.map-preview { position: relative; height: 180px; overflow: hidden; border: 1px solid var(--sb-border2); }
+.map-overlay-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,0.75);
+  padding: 6px 10px;
+  font-size: 10px;
+  color: var(--sb-accent);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 900px) {
+  .dash-root { grid-template-columns: 1fr; }
+  .metrics-row { grid-template-columns: 1fr 1fr; }
+}

@@ -1,0 +1,72 @@
+<div class="scanner-root">
+  <div class="scanner-header">
+    <div class="shield-icon">
+      <mat-icon>shield</mat-icon>
+    </div>
+    <h2 class="brand">Avisum</h2>
+    <p class="brand-sub">Validación de Identidad</p>
+  </div>
+
+  <div class="scanner-card">
+    <div class="scan-label-row">
+      <span class="scan-label">CÓDIGO DE VERIFICACIÓN</span>
+      <span class="live-dot"><span class="dot-pulse"></span> LIVE SCAN</span>
+    </div>
+
+    <div class="camera-view">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+      <div class="qr-ghost">
+        <mat-icon>qr_code_2</mat-icon>
+      </div>
+      <div class="scan-line" [style.top.%]="scanLine()"></div>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-w">
+      <input matInput placeholder="Ingresar código manualmente"
+             [value]="manualCode()"
+             (input)="manualCode.set($any($event.target).value)"
+             (keyup.enter)="validate()" />
+    </mat-form-field>
+
+    <button class="sb-btn-primary" (click)="validate()">VALIDAR IDENTIDAD</button>
+    @if (errorMsg()) {
+      <p class="scan-error">{{ errorMsg() }}</p>
+    }
+    <p class="scan-note">Solo conductores registrados pueden iniciar servicio</p>
+  </div>
+
+  @if (conductorFound(); as c) {
+    <div class="identity-card">
+      <div class="id-top">
+        <div class="id-avatar">{{ c.iniciales }}</div>
+        <div class="id-info">
+          <span class="verified-badge">IDENTIDAD VERIFICADA</span>
+          <h3 class="id-name">{{ c.nombreCompleto }}</h3>
+          <p class="id-sub">ID: QR-{{ c.codigoEmpleado }}</p>
+        </div>
+      </div>
+      <div class="id-details">
+        <div class="id-detail-item">
+          <span class="sb-label">PLACA VEHÍCULO</span>
+          <span class="id-detail-val">{{ placaDe(c) }}</span>
+        </div>
+        <div class="id-detail-item">
+          <span class="sb-label">ESTADO</span>
+          <span class="id-detail-val accent">{{ c.estado }}</span>
+        </div>
+      </div>
+      <button class="sb-btn-primary" (click)="startShift()">INICIAR TURNO →</button>
+    </div>
+  }
+
+  <footer class="scanner-footer">
+    <span class="sb-mono footer-left">TRANSIT-SEC PROTOCOL</span>
+    <div class="footer-right">
+      <span class="dot-green"></span> ENCRIPTACIÓN AES-256
+      <span class="dot-green" style="margin-left:12px"></span> CLOUD_SYNC OK
+    </div>
+  </footer>
+</div>

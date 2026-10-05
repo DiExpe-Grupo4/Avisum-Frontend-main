@@ -1,0 +1,49 @@
+<div class="layout-root">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-text">Avisum</span>
+      <span class="role-tag">ADMINISTRADOR</span>
+    </div>
+    <nav class="sidebar-nav">
+      @for (item of navItems(); track item.route) {
+        <a class="nav-item" [routerLink]="item.route" routerLinkActive="nav-active">
+          <mat-icon>{{ item.icon }}</mat-icon>
+          <span>{{ item.label }}</span>
+          @if (item.route === '/admin/notifications' && alerts.hayActivas()) {
+            <span class="nav-badge">{{ alerts.activas().length }}</span>
+          }
+        </a>
+      }
+    </nav>
+    <div class="sidebar-bottom">
+      <a class="settings-link" routerLink="/admin/profile">
+        <mat-icon>account_circle</mat-icon> MI PERFIL
+      </a>
+      <button class="settings-link logout-btn" (click)="cerrarSesion()">
+        <mat-icon>logout</mat-icon> CERRAR SESIÓN
+      </button>
+    </div>
+  </aside>
+  <div class="main-area">
+    <header class="toolbar">
+      <div class="toolbar-left">
+        <span class="toolbar-title">AVISUM ADMIN</span>
+        <span class="toolbar-sep">|</span>
+        <span class="toolbar-unit">PANEL DE CONTROL</span>
+      </div>
+      <div class="toolbar-right">
+        <div class="bell-wrap" (click)="irANotificaciones()">
+          <mat-icon class="tb-icon">notifications_none</mat-icon>
+          @if (alerts.hayActivas()) {
+            <span class="bell-dot"></span>
+          }
+        </div>
+        <a routerLink="/admin/profile" title="Mi perfil" class="profile-link">
+          <mat-icon class="tb-icon">account_circle</mat-icon>
+        </a>
+        <span class="live-badge">SISTEMA ACTIVO</span>
+      </div>
+    </header>
+    <main class="content-area"><router-outlet /></main>
+  </div>
+</div>
