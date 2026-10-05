@@ -30,8 +30,8 @@ export class AdminLayout {
     this.router.navigate(['/admin/notifications']);
   }
 
-  cerrarSesion() {
-    this.adminAuth.logout();
-    this.router.navigate(['/conductor/login']);
+cerrarSesion() {
+  this.adminAuth.logout();
+  this.router.navigate(['/admin/login']);
   }
 }
