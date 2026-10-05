@@ -17,6 +17,10 @@ const accessAuthorized = () =>
   );
 const adminProfile = () =>
   import('./iam/presentation/views/admin-profile/admin-profile').then((m) => m.AdminProfile);
+
+const adminLogin = () =>
+  import('./iam/presentation/views/admin-login/admin-login').then((m) => m.AdminLogin);
+
 // Camera
 const qrScanner = () =>
   import('./camera/presentation/views/qr-scanner/qr-scanner').then((m) => m.QrScanner);
@@ -80,6 +84,7 @@ const baseTitle = 'Avisum | UrbanGuard';
 export const routes: Routes = [
   // Rutas de conductor sin layout (login / verificación / pánico)
   { path: 'conductor/login', loadComponent: login, title: `${baseTitle} - Conductor` },
+  { path: 'admin/login', loadComponent: adminLogin, title: `${baseTitle} - Admin` },
   { path: 'conductor/qr-scanner', loadComponent: qrScanner, title: `${baseTitle} - Conductor` },
   {
     path: 'conductor/access-authorized',
