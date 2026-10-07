@@ -100,6 +100,25 @@
           @if (formErrors()['password']) { <span class="field-error">{{ formErrors()['password'] }}</span> }
         </div>
         <p class="form-note">El código de empleado se asigna automáticamente al guardar.</p>
+        @if (formMode() === 'crear') {
+          <div class="form-row">
+            <label>Contraseña temporal</label>
+            <input type="password" [value]="fPassword()" (input)="fPassword.set($any($event.target).value)" />
+            @if (formErrors()['password']) { <span class="field-error">{{ formErrors()['password'] }}</span> }
+          </div>
+
+          <div class="form-row">
+            <label>Placa de unidad (opcional)</label>
+            <input placeholder="Ej: ABC-1234" [value]="fPlaca()" (input)="fPlaca.set($any($event.target).value)" />
+          </div>
+
+          <div class="form-row">
+            <label>Ruta (opcional)</label>
+            <input placeholder="Ej: R-15" [value]="fRuta()" (input)="fRuta.set($any($event.target).value)" />
+          </div>
+
+        }
+
       }
 
       <div class="modal-btns">
