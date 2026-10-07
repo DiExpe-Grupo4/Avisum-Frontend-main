@@ -1,6 +1,6 @@
 <div class="layout-root">
   <!-- SIDEBAR -->
-  <aside class="sidebar">
+  <aside class="sidebar" [class.sidebar-open]="sidebarOpen()">
     <div class="sidebar-brand">
       <span class="brand-text">Avisum</span>
       <span class="operator-tag">OPERATOR-01</span>
@@ -10,7 +10,8 @@
       @for (item of navItems(); track item.route) {
         <a class="nav-item"
            [routerLink]="item.route"
-           routerLinkActive="nav-active">
+           routerLinkActive="nav-active"
+           (click)="closeSidebar()">
           <mat-icon>{{ item.icon }}</mat-icon>
           <span>{{ item.label }}</span>
         </a>
@@ -22,10 +23,10 @@
         <mat-icon>emergency</mat-icon>
         PANIC SIGNAL
       </button>
-      <a class="settings-link" routerLink="/conductor/settings">
+      <a class="settings-link" routerLink="/conductor/settings" (click)="closeSidebar()">
         <mat-icon>settings</mat-icon> SETTINGS
       </a>
-      <a class="settings-link" routerLink="/conductor/support">
+      <a class="settings-link" routerLink="/conductor/support" (click)="closeSidebar()">
         <mat-icon>help_outline</mat-icon> SUPPORT
       </a>
       <button class="settings-link logout-btn" (click)="logout()">
@@ -34,11 +35,18 @@
     </div>
   </aside>
 
+  @if (sidebarOpen()) {
+    <div class="sidebar-backdrop" (click)="closeSidebar()"></div>
+  }
+
   <!-- MAIN CONTENT -->
   <div class="main-area">
     <!-- TOOLBAR -->
     <header class="toolbar">
       <div class="toolbar-left">
+        <button class="hamburger-btn" (click)="toggleSidebar()">
+          <mat-icon>menu</mat-icon>
+        </button>
         <span class="toolbar-title">TRANSIT MONITOR v2.4</span>
         <span class="toolbar-sep">|</span>
         <span class="toolbar-unit">UNIT: BUS-7729</span>
