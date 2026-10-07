@@ -21,6 +21,15 @@ export class ConductorLayout {
   ]);
 
   panicTriggered = signal(false);
+  sidebarOpen = signal(false);
+
+  toggleSidebar() {
+    this.sidebarOpen.update((v) => !v);
+  }
+
+  closeSidebar() {
+    this.sidebarOpen.set(false);
+  }
 
   triggerPanic() {
     this.panicTriggered.set(true);
