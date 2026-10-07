@@ -1,12 +1,12 @@
 <div class="layout-root">
-  <aside class="sidebar">
+  <aside class="sidebar" [class.sidebar-open]="sidebarOpen()">
     <div class="sidebar-brand">
       <span class="brand-text">Avisum</span>
       <span class="role-tag">ADMINISTRADOR</span>
     </div>
     <nav class="sidebar-nav">
       @for (item of navItems(); track item.route) {
-        <a class="nav-item" [routerLink]="item.route" routerLinkActive="nav-active">
+        <a class="nav-item" [routerLink]="item.route" routerLinkActive="nav-active" (click)="closeSidebar()">
           <mat-icon>{{ item.icon }}</mat-icon>
           <span>{{ item.label }}</span>
           @if (item.route === '/admin/notifications' && alerts.hayActivas()) {
@@ -16,7 +16,7 @@
       }
     </nav>
     <div class="sidebar-bottom">
-      <a class="settings-link" routerLink="/admin/profile">
+      <a class="settings-link" routerLink="/admin/profile" (click)="closeSidebar()">
         <mat-icon>account_circle</mat-icon> MI PERFIL
       </a>
       <button class="settings-link logout-btn" (click)="cerrarSesion()">
@@ -24,9 +24,17 @@
       </button>
     </div>
   </aside>
+
+  @if (sidebarOpen()) {
+    <div class="sidebar-backdrop" (click)="closeSidebar()"></div>
+  }
+
   <div class="main-area">
     <header class="toolbar">
       <div class="toolbar-left">
+        <button class="hamburger-btn" (click)="toggleSidebar()">
+          <mat-icon>menu</mat-icon>
+        </button>
         <span class="toolbar-title">AVISUM ADMIN</span>
         <span class="toolbar-sep">|</span>
         <span class="toolbar-unit">PANEL DE CONTROL</span>
