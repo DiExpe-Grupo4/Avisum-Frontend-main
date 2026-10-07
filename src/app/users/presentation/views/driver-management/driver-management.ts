@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { UsersStateService } from '../../../application/users-state.service';
 import { Driver } from '../../../domain/model/driver.entity';
+import { FleetTrackingService } from '../../../../shared/infrastructure/fleet-tracking.service';
 
 type FormMode = 'crear' | 'editar';
 type ConfirmAction = 'desactivar' | 'reactivar' | 'eliminar';
@@ -16,6 +17,7 @@ type ConfirmAction = 'desactivar' | 'reactivar' | 'eliminar';
 })
 export class DriverManagement implements OnInit {
   readonly state = inject(UsersStateService);
+  private fleet = inject(FleetTrackingService);
 
   searchTerm = this.state.searchTerm;
   filtered = this.state.filtered;
@@ -31,6 +33,8 @@ export class DriverManagement implements OnInit {
   fDni = signal('');
   fEmail = signal('');
   fPassword = signal('');
+  fPlaca = signal('');
+  fRuta = signal('');
 
   formErrors = signal<Record<string, string>>({});
 
@@ -61,6 +65,8 @@ export class DriverManagement implements OnInit {
     this.fDni.set('');
     this.fEmail.set('');
     this.fPassword.set('');
+    this.fPlaca.set('');
+    this.fRuta.set('');
     this.formErrors.set({});
     this.showFormModal.set(true);
   }
@@ -107,15 +113,24 @@ export class DriverManagement implements OnInit {
     };
 
     if (this.formMode() === 'crear') {
-      this.state.crear({ ...datosBase, password: this.fPassword().trim() }, (err) => {
-        this.saving.set(false);
-        if (err) {
-          this.formErrors.set({ general: err });
-          return;
-        }
-        this.showFormModal.set(false);
-        this.mostrarToast('Conductor creado correctamente');
-      });
+      this.state.crear(
+        {
+          ...datosBase,
+          password: this.fPassword().trim(),
+          placa: this.fPlaca().trim(),
+          ruta: this.fRuta().trim(),
+        },
+        (err) => {
+          this.saving.set(false);
+          if (err) {
+            this.formErrors.set({ general: err });
+            return;
+          }
+          this.showFormModal.set(false);
+          this.fleet.recargar();
+          this.mostrarToast('Conductor creado correctamente');
+        },
+      );
     } else {
       const id = this.editingId();
       if (id == null) return;
