@@ -147,3 +147,14 @@
   .left-panel { display: none; }
   .right-panel { width: 100%; }
 }
+
+@media (max-width: 480px) {
+  .right-panel {
+    padding: 24px 16px;
+  }
+  .form-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
