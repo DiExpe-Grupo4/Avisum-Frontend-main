@@ -26,12 +26,23 @@ export class AdminLayout {
     { icon: 'bar_chart', label: 'IMPACTO NÚMEROS', route: '/admin/impact' },
   ]);
 
-  irANotificaciones() {
-    this.router.navigate(['/admin/notifications']);
+  sidebarOpen = signal(false);
+
+  toggleSidebar() {
+    this.sidebarOpen.update((v) => !v);
   }
 
-cerrarSesion() {
-  this.adminAuth.logout();
-  this.router.navigate(['/admin/login']);
+  closeSidebar() {
+    this.sidebarOpen.set(false);
+  }
+
+  irANotificaciones() {
+    this.router.navigate(['/admin/notifications']);
+    this.closeSidebar();
+  }
+
+  cerrarSesion() {
+    this.adminAuth.logout();
+    this.router.navigate(['/admin/login']);
   }
 }
