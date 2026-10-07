@@ -55,7 +55,15 @@ export class UsersStateService {
   }
 
   crear(
-    data: { nombre: string; apellido: string; dni: string; email: string; password: string },
+    data: {
+      nombre: string;
+      apellido: string;
+      dni: string;
+      email: string;
+      password: string;
+      placa?: string;
+      ruta?: string;
+    },
     onDone: (err?: string) => void,
   ) {
     const req: CreateEmployeeRequest = {
@@ -67,7 +75,7 @@ export class UsersStateService {
     };
     this.api.create(req).subscribe({
       next: (empleado) => {
-        this.crearUnidadParaConductor(empleado.id);
+        this.crearUnidadParaConductor(empleado.id, data.placa, data.ruta);
         this.cargar();
         onDone();
       },
@@ -75,13 +83,13 @@ export class UsersStateService {
     });
   }
 
-  /** Crea automáticamente una unidad propia para el conductor recién creado, para que pueda trabajar de inmediato. */
-  private crearUnidadParaConductor(employeeId: number) {
-    const plate = `BUS-${String(employeeId).padStart(3, '0')}`;
+  /** Crea la unidad para el conductor recién creado. Si el admin no especificó placa/ruta, usa valores automáticos. */
+  private crearUnidadParaConductor(employeeId: number, placa?: string, ruta?: string) {
+    const plate = placa?.trim() || `BUS-${String(employeeId).padStart(3, '0')}`;
     this.http
       .post(`${environment.platformProviderApiBaseUrl}/bus-units`, {
         plateNumber: plate,
-        route: 'Por asignar',
+        route: ruta?.trim() || 'Por asignar',
         latitude: -12.0464,
         longitude: -77.0428,
         assignedEmployeeId: employeeId,
