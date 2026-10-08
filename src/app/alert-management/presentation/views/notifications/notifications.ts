@@ -133,6 +133,48 @@ import { FleetTrackingService } from '../../../../shared/infrastructure/fleet-tr
         color: var(--sb-gray);
         padding: 10px 0;
       }
+      @media (max-width: 768px) {
+        .notif-root {
+          padding: 14px;
+        }
+        .page-title {
+          font-size: 20px;
+          margin-bottom: 16px;
+        }
+        .notif-grid {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+        .section-label {
+          font-size: 12px;
+          margin-bottom: 12px;
+        }
+        .recip-row,
+        .notif-row {
+          padding: 12px 0;
+          gap: 14px;
+        }
+        .recip-row mat-icon {
+          font-size: 26px;
+          width: 26px;
+          height: 26px;
+        }
+        .recip-name {
+          font-size: 15px;
+        }
+        .recip-type {
+          font-size: 12px;
+        }
+        .recip-status {
+          font-size: 11px;
+        }
+        .notif-msg {
+          font-size: 13px;
+        }
+        .notif-hora {
+          font-size: 11px;
+        }
+      }
     `,
   ],
 })
