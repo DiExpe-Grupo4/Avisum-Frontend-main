@@ -178,3 +178,26 @@
 .modal-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .modal-check--warn { background: rgba(240,160,0,0.15); }
 .modal-check--warn mat-icon { color: #f0a000; }
+
+@media (max-width: 900px) {
+  .dash-root {
+    grid-template-columns: 1fr;
+    height: auto;
+    min-height: calc(100vh - 48px);
+  }
+  .map-preview {
+    min-height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .metrics-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .route-row {
+    flex-wrap: wrap;
+  }
+  .map-btn {
+    width: 100%;
+  }
+}
