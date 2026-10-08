@@ -40,8 +40,8 @@
     grid-template-columns: 1fr;
   }
   .map-wrap {
-    min-height: 260px;
-    height: 45vh;
+    min-height: 280px;
+    height: 48vh;
   }
   .cc-right {
     max-height: none;
@@ -50,39 +50,63 @@
 
 @media (max-width: 600px) {
   .cc-root {
-    padding: 10px;
+    padding: 14px;
     height: auto;
     min-height: calc(100vh - 48px);
+    gap: 14px;
   }
   .kpi-row {
-    gap: 8px;
-  }
-  .kpi-card {
-    padding: 10px 12px;
     gap: 10px;
   }
+  .kpi-card {
+    padding: 14px 16px;
+    gap: 12px;
+  }
   .kpi-card mat-icon {
-    font-size: 24px;
-    width: 24px;
-    height: 24px;
+    font-size: 28px;
+    width: 28px;
+    height: 28px;
   }
   .kpi-val {
-    font-size: 24px;
+    font-size: 28px;
   }
   .sb-label {
-    font-size: 9px;
+    font-size: 10px;
   }
   .map-wrap {
-    height: 40vh;
-    min-height: 220px;
+    height: 42vh;
+    min-height: 240px;
   }
   .unit-rows {
-    max-height: 160px;
+    max-height: 200px;
+    gap: 8px;
+  }
+  .unit-row {
+    padding: 10px;
+  }
+  .unit-placa {
+    font-size: 14px;
+  }
+  .unit-cond {
+    font-size: 11px;
+  }
+  .alert-row {
+    padding: 12px 10px;
+  }
+  .alert-tipo {
+    font-size: 13px;
+  }
+  .section-label {
+    font-size: 12px;
+    margin-bottom: 14px;
   }
 }
 
 @media (max-width: 380px) {
   .kpi-row {
     grid-template-columns: 1fr;
+  }
+  .kpi-card {
+    padding: 12px 14px;
   }
 }
