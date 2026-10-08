@@ -100,6 +100,7 @@
     transition: transform 0.25s ease;
     width: 220px;
     min-width: 220px;
+    overflow-y: auto;
   }
   .sidebar.sidebar-open {
     transform: translateX(0);
