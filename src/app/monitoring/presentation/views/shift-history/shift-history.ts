@@ -408,6 +408,71 @@ interface FilaAnterior {
         font-size: 13px;
         text-align: center;
       }
+      @media (max-width: 768px) {
+        .sh-root {
+          padding: 14px;
+        }
+        .sh-top {
+          gap: 12px;
+          margin-bottom: 14px;
+        }
+        .page-title {
+          font-size: 20px;
+        }
+        .sh-filtros {
+          width: 100%;
+        }
+        .sh-select {
+          flex: 1;
+          font-size: 13px;
+          padding: 9px 10px;
+        }
+        .sh-tabs {
+          flex-wrap: wrap;
+        }
+        .sh-tab {
+          font-size: 12px;
+          padding: 9px 12px;
+          flex: 1;
+        }
+        .sh-stats {
+          grid-template-columns: repeat(2, 1fr);
+          margin-bottom: 14px;
+        }
+        .sh-stat {
+          padding: 14px 16px;
+        }
+        .sh-stat-val {
+          font-size: 24px;
+        }
+        .sh-stat-label {
+          font-size: 11px;
+        }
+        .sh-sub-title {
+          font-size: 16px;
+          margin: 20px 0 10px;
+        }
+        .shift-table {
+          overflow-x: auto;
+        }
+        .sh-header,
+        .sh-row {
+          min-width: 760px;
+        }
+        .sh-header span {
+          font-size: 11px;
+        }
+        .sh-name {
+          font-size: 14px;
+        }
+        .sh-val,
+        .sh-accent {
+          font-size: 14px;
+        }
+        .sh-mono {
+          font-size: 12px;
+        }
+      }
     `,
   ],
 })
